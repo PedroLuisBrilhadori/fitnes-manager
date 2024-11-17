@@ -23,15 +23,15 @@ import { coordinateGetter } from './multipleContainersKeyboardPreset';
 
 const defaultCols = [
   {
-    id: 'a' as const,
+    id: 'a',
     title: 'A - Empurrar/Puxar',
   },
   {
-    id: 'b' as const,
+    id: 'b',
     title: 'B - Levantar',
   },
   {
-    id: 'c' as const,
+    id: 'c',
     title: 'C - Empurrar/Puxar',
   },
   {
@@ -39,8 +39,8 @@ const defaultCols = [
     title: 'D - Levantar',
   },
   {
-    id: 'cardio',
-    title: 'Cardio',
+    id: 'cárdio',
+    title: 'Cárdio',
   },
 ] satisfies Column[];
 
@@ -48,28 +48,355 @@ export type ColumnId = string;
 
 const initialTasks: Task[] = [
   {
+    id: 1,
     name: 'Mobilidade de ombro com bastão',
+    serie: 2,
+    repetition: 10,
+    checked: false,
     counter: 0,
     groupId: 'a',
-    repetition: 2,
-    serie: 10,
-    checked: false,
   },
   {
-    name: 'Mobilidade de ombro com bastão - b',
+    id: 2,
+    name: 'Alongamento de ombro no chão',
+    serie: 2,
+    repetition: 30,
+    checked: false,
+    counter: 0,
+    groupId: 'a',
+  },
+  {
+    id: 3,
+    name: 'Pêndulo',
+    serie: 2,
+    repetition: 15,
+    checked: false,
+    counter: 0,
+    groupId: 'a',
+  },
+  {
+    id: 4,
+    name: 'Leg 45',
+    serie: 0,
+    repetition: 0,
+    checked: false,
+    counter: 0,
+    groupId: 'a',
+  },
+  {
+    id: 5,
+    name: 'Agachamento Livre',
+    serie: 0,
+    repetition: 0,
+    checked: false,
+    counter: 0,
+    groupId: 'a',
+  },
+  {
+    id: 6,
+    name: 'Desenvolvimento com barra nuca',
+    serie: 0,
+    repetition: 0,
+    checked: false,
+    counter: 0,
+    groupId: 'a',
+  },
+  {
+    id: 7,
+    name: 'Supino reto',
+    serie: 0,
+    repetition: 0,
+    checked: false,
+    counter: 0,
+    groupId: 'a',
+  },
+  {
+    id: 8,
+    name: 'Remada curvada',
+    serie: 0,
+    repetition: 0,
+    checked: false,
+    counter: 0,
+    groupId: 'a',
+  },
+  {
+    id: 9,
+    name: 'Rosca 21 - livre',
+    serie: 0,
+    repetition: 0,
+    checked: false,
+    counter: 0,
+    groupId: 'a',
+  },
+  {
+    id: 10,
+    name: 'Mobilidade de ombro com bastão',
+    serie: 2,
+    repetition: 10,
+    checked: false,
     counter: 0,
     groupId: 'b',
-    repetition: 2,
-    serie: 10,
-    checked: false,
   },
   {
+    id: 11,
+    name: 'Alongamento de ombro na parede',
+    serie: 2,
+    repetition: 30,
+    checked: false,
+    counter: 0,
+    groupId: 'b',
+  },
+  {
+    id: 12,
+    name: 'Manguito rotador externo',
+    serie: 2,
+    repetition: 15,
+    checked: false,
+    counter: 0,
+    groupId: 'b',
+  },
+  {
+    id: 13,
+    name: 'Mesa Flexora',
+    serie: 0,
+    repetition: 0,
+    checked: false,
+    counter: 0,
+    groupId: 'b',
+  },
+  {
+    id: 14,
+    name: 'Levantamento terra',
+    serie: 0,
+    repetition: 0,
+    checked: false,
+    counter: 0,
+    groupId: 'b',
+  },
+  {
+    id: 15,
+    name: 'Elevação frontal + lateral',
+    serie: 0,
+    repetition: 0,
+    checked: false,
+    counter: 0,
+    groupId: 'b',
+  },
+  {
+    id: 16,
+    name: 'Rosca direta',
+    serie: 0,
+    repetition: 0,
+    checked: false,
+    counter: 0,
+    groupId: 'b',
+  },
+  {
+    id: 17,
+    name: 'Rosca inversa',
+    serie: 0,
+    repetition: 0,
+    checked: false,
+    counter: 0,
+    groupId: 'b',
+  },
+  {
+    id: 18,
+    name: 'Triceps com algum puxador (V ou corda)',
+    serie: 0,
+    repetition: 0,
+    checked: false,
+    counter: 0,
+    groupId: 'b',
+  },
+  {
+    id: 19,
     name: 'Mobilidade de quadril - escorpião',
+    serie: 2,
+    repetition: 10,
+    checked: false,
     counter: 0,
     groupId: 'c',
-    repetition: 5,
-    serie: 3,
+  },
+  {
+    id: 20,
+    name: 'Cadeira abdutora',
+    serie: 2,
+    repetition: 15,
     checked: false,
+    counter: 0,
+    groupId: 'c',
+  },
+  {
+    id: 21,
+    name: 'Cadeira adutora',
+    serie: 2,
+    repetition: 15,
+    checked: false,
+    counter: 0,
+    groupId: 'c',
+  },
+  {
+    id: 22,
+    name: 'Avanço',
+    serie: 0,
+    repetition: 0,
+    checked: false,
+    counter: 0,
+    groupId: 'c',
+  },
+  {
+    id: 23,
+    name: 'Hack',
+    serie: 0,
+    repetition: 0,
+    checked: false,
+    counter: 0,
+    groupId: 'c',
+  },
+  {
+    id: 24,
+    name: 'Desenvolvimento com halter',
+    serie: 0,
+    repetition: 0,
+    checked: false,
+    counter: 0,
+    groupId: 'c',
+  },
+  {
+    id: 25,
+    name: 'Banco peitoral (peck deck)',
+    serie: 0,
+    repetition: 0,
+    checked: false,
+    counter: 0,
+    groupId: 'c',
+  },
+  {
+    id: 26,
+    name: 'Banco dorsal',
+    serie: 0,
+    repetition: 0,
+    checked: false,
+    counter: 0,
+    groupId: 'c',
+  },
+  {
+    id: 27,
+    name: 'Triceps com algum puxador (V ou barra reta)',
+    serie: 0,
+    repetition: 0,
+    checked: false,
+    counter: 0,
+    groupId: 'c',
+  },
+  {
+    id: 28,
+    name: 'Mobilidade de quadril - escorpião',
+    serie: 2,
+    repetition: 10,
+    checked: false,
+    counter: 0,
+    groupId: 'd',
+  },
+  {
+    id: 29,
+    name: 'Manguito rotador interno',
+    serie: 2,
+    repetition: 15,
+    checked: false,
+    counter: 0,
+    groupId: 'd',
+  },
+  {
+    id: 30,
+    name: 'Posterior de ombro com halter ou corda na polia',
+    serie: 2,
+    repetition: 15,
+    checked: false,
+    counter: 0,
+    groupId: 'd',
+  },
+  {
+    id: 31,
+    name: 'Cadeira extensora',
+    serie: 0,
+    repetition: 0,
+    checked: false,
+    counter: 0,
+    groupId: 'd',
+  },
+  {
+    id: 32,
+    name: 'Stiff',
+    serie: 0,
+    repetition: 0,
+    checked: false,
+    counter: 0,
+    groupId: 'd',
+  },
+  {
+    id: 33,
+    name: 'Elevação frontal + lateral',
+    serie: 0,
+    repetition: 0,
+    checked: false,
+    counter: 0,
+    groupId: 'd',
+  },
+  {
+    id: 34,
+    name: 'Rosca alternada com halter',
+    serie: 0,
+    repetition: 0,
+    checked: false,
+    counter: 0,
+    groupId: 'd',
+  },
+  {
+    id: 35,
+    name: 'Triceps francês',
+    serie: 0,
+    repetition: 0,
+    checked: false,
+    counter: 0,
+    groupId: 'd',
+  },
+  {
+    id: 36,
+    name: 'Triceps com algum puxador (corda ou barra reta)',
+    serie: 0,
+    repetition: 0,
+    checked: false,
+    counter: 0,
+    groupId: 'd',
+  },
+  {
+    id: 37,
+    name: 'Extensão lombar',
+    serie: 4,
+    repetition: 10,
+    checked: false,
+    counter: 0,
+    groupId: 'cárdio',
+  },
+  {
+    id: 38,
+    name: 'Abdominal prancha lateral',
+    serie: 4,
+    repetition: 30,
+    checked: false,
+    counter: 0,
+    groupId: 'cárdio',
+  },
+  {
+    id: 39,
+    name: 'Abdominal prancha',
+    serie: 4,
+    repetition: 30,
+    checked: false,
+    counter: 0,
+    groupId: 'cárdio',
   },
 ];
 
@@ -94,9 +421,7 @@ export function KanbanBoard() {
 
   function getDraggingTaskData(taskId: UniqueIdentifier, columnId: ColumnId) {
     const tasksInColumn = tasks.filter((task) => task.groupId === columnId);
-    const taskPosition = tasksInColumn.findIndex(
-      (task) => task.name === taskId,
-    );
+    const taskPosition = tasksInColumn.findIndex((task) => task.id === taskId);
     const column = columns.find((col) => col.id === columnId);
     return {
       tasksInColumn,
@@ -121,7 +446,7 @@ export function KanbanBoard() {
           pickedUpTaskColumn.current,
         );
         return `Picked up Task ${
-          active.data.current.task.name
+          active.data.current.task.id
         } at position: ${taskPosition + 1} of ${
           tasksInColumn.length
         } in column ${column?.title}`;
@@ -148,7 +473,7 @@ export function KanbanBoard() {
         );
         if (over.data.current.task.groupId !== pickedUpTaskColumn.current) {
           return `Task ${
-            active.data.current.task.name
+            active.data.current.task.id
           } was moved over column ${column?.title} in position ${
             taskPosition + 1
           } of ${tasksInColumn.length}`;
@@ -204,7 +529,7 @@ export function KanbanBoard() {
     const updateTask = cb();
 
     const updateTasks = tasks.map((t) => {
-      if (t.name != updateTask.name) return t;
+      if (t.id != updateTask.id) return t;
       return updateTask;
       1;
     });

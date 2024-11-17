@@ -8,6 +8,7 @@ import { Badge } from '../ui/badge';
 import { ColumnId } from './kanban';
 
 export interface Task {
+  id: number;
   name: string;
   serie: number;
   repetition: number;
@@ -38,7 +39,7 @@ export function TaskCard({ task, isOverlay, updateTasks }: TaskCardProps) {
     transition,
     isDragging,
   } = useSortable({
-    id: task.name,
+    id: task.id,
     data: {
       type: 'Task',
       task,

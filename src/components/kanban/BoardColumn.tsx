@@ -36,7 +36,7 @@ export function BoardColumn({
   updateTasks,
 }: BoardColumnProps) {
   const tasksIds = useMemo(() => {
-    return tasks.map((task) => task.name);
+    return tasks.map((task) => task.id);
   }, [tasks]);
 
   const {
@@ -99,7 +99,7 @@ export function BoardColumn({
         <CardContent className="flex flex-grow flex-col gap-2 p-2">
           <SortableContext items={tasksIds}>
             {tasks.map((task) => (
-              <TaskCard updateTasks={updateTasks} key={task.name} task={task} />
+              <TaskCard updateTasks={updateTasks} key={task.id} task={task} />
             ))}
           </SortableContext>
         </CardContent>
