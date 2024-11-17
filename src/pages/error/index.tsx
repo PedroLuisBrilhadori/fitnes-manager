@@ -8,6 +8,10 @@ export const ErrorPage = () => {
   console.log(error);
 
   useEffect(() => {
+    if (location.pathname != '/home') {
+      navigate('/home');
+    }
+
     if (error?.status === 403) {
       navigate('/login');
     }

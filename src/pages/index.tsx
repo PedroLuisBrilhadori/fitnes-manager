@@ -11,6 +11,15 @@ import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/sidebar/sidebar';
 
 export const CommonPage = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (location.pathname != '/home') {
+      navigate('/home');
+    }
+  }, [location]);
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -31,7 +40,7 @@ export const RawPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (location.pathname == '/') {
+    if (location.pathname != '/home') {
       navigate('/home');
     }
   }, [location]);
