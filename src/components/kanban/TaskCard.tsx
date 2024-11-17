@@ -1,4 +1,3 @@
-import type { UniqueIdentifier } from '@dnd-kit/core';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
@@ -9,9 +8,12 @@ import { Badge } from '../ui/badge';
 import { ColumnId } from './kanban';
 
 export interface Task {
-  id: UniqueIdentifier;
-  columnId: ColumnId;
-  content: string;
+  name: string;
+  serie: number;
+  repetition: number;
+  checked: boolean;
+  counter: number;
+  groupId: ColumnId;
 }
 
 interface TaskCardProps {
@@ -35,7 +37,7 @@ export function TaskCard({ task, isOverlay }: TaskCardProps) {
     transition,
     isDragging,
   } = useSortable({
-    id: task.id,
+    id: task.name,
     data: {
       type: 'Task',
       task,
@@ -82,7 +84,7 @@ export function TaskCard({ task, isOverlay }: TaskCardProps) {
         </Badge>
       </CardHeader>
       <CardContent className="px-3 pt-3 pb-6 text-left whitespace-pre-wrap">
-        {task.content}
+        {task.name}
       </CardContent>
     </Card>
   );

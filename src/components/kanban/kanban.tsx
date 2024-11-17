@@ -26,85 +26,21 @@ const defaultCols = [
     id: 'todo' as const,
     title: 'Todo',
   },
-  {
-    id: 'in-progress' as const,
-    title: 'In progress',
-  },
-  {
-    id: 'done' as const,
-    title: 'Done',
-  },
 ] satisfies Column[];
 
-export type ColumnId = (typeof defaultCols)[number]['id'];
+export type ColumnId = string;
 
 const initialTasks: Task[] = [
   {
-    id: 'task1',
-    columnId: 'done',
-    content: 'Project initiation and planning',
-  },
-  {
-    id: 'task2',
-    columnId: 'done',
-    content: 'Gather requirements from stakeholders',
-  },
-  {
-    id: 'task3',
-    columnId: 'done',
-    content: 'Create wireframes and mockups',
-  },
-  {
-    id: 'task4',
-    columnId: 'in-progress',
-    content: 'Develop homepage layout',
-  },
-  {
-    id: 'task5',
-    columnId: 'in-progress',
-    content: 'Design color scheme and typography',
-  },
-  {
-    id: 'task6',
-    columnId: 'todo',
-    content: 'Implement user authentication',
-  },
-  {
-    id: 'task7',
-    columnId: 'todo',
-    content: 'Build contact us page',
-  },
-  {
-    id: 'task8',
-    columnId: 'todo',
-    content: 'Create product catalog',
-  },
-  {
-    id: 'task9',
-    columnId: 'todo',
-    content: 'Develop about us page',
-  },
-  {
-    id: 'task10',
-    columnId: 'todo',
-    content: 'Optimize website for mobile devices',
-  },
-  {
-    id: 'task11',
-    columnId: 'todo',
-    content: 'Integrate payment gateway',
-  },
-  {
-    id: 'task12',
-    columnId: 'todo',
-    content: 'Perform testing and bug fixing',
-  },
-  {
-    id: 'task13',
-    columnId: 'todo',
-    content: 'Launch website and deploy to server',
+    name: 'Exercicio Teste',
+    counter: 0,
+    groupId: 'todo',
+    repetition: 5,
+    serie: 3,
+    checked: false,
   },
 ];
+
 export function KanbanBoard() {
   const [columns, setColumns] = useState<Column[]>(defaultCols);
   const pickedUpTaskColumn = useRef<ColumnId | null>(null);
@@ -125,8 +61,10 @@ export function KanbanBoard() {
   );
 
   function getDraggingTaskData(taskId: UniqueIdentifier, columnId: ColumnId) {
-    const tasksInColumn = tasks.filter((task) => task.columnId === columnId);
-    const taskPosition = tasksInColumn.findIndex((task) => task.id === taskId);
+    const tasksInColumn = tasks.filter((task) => task.groupId === columnId);
+    const taskPosition = tasksInColumn.findIndex(
+      (task) => task.name === taskId,
+    );
     const column = columns.find((col) => col.id === columnId);
     return {
       tasksInColumn,
@@ -145,13 +83,13 @@ export function KanbanBoard() {
           startColumnIdx + 1
         } of ${columnsId.length}`;
       } else if (active.data.current?.type === 'Task') {
-        pickedUpTaskColumn.current = active.data.current.task.columnId;
+        pickedUpTaskColumn.current = active.data.current.task.groupId;
         const { tasksInColumn, taskPosition, column } = getDraggingTaskData(
           active.id,
           pickedUpTaskColumn.current,
         );
         return `Picked up Task ${
-          active.data.current.task.content
+          active.data.current.task.name
         } at position: ${taskPosition + 1} of ${
           tasksInColumn.length
         } in column ${column?.title}`;
@@ -174,11 +112,11 @@ export function KanbanBoard() {
       ) {
         const { tasksInColumn, taskPosition, column } = getDraggingTaskData(
           over.id,
-          over.data.current.task.columnId,
+          over.data.current.task.groupId,
         );
-        if (over.data.current.task.columnId !== pickedUpTaskColumn.current) {
+        if (over.data.current.task.groupId !== pickedUpTaskColumn.current) {
           return `Task ${
-            active.data.current.task.content
+            active.data.current.task.name
           } was moved over column ${column?.title} in position ${
             taskPosition + 1
           } of ${tasksInColumn.length}`;
@@ -210,9 +148,9 @@ export function KanbanBoard() {
       ) {
         const { tasksInColumn, taskPosition, column } = getDraggingTaskData(
           over.id,
-          over.data.current.task.columnId,
+          over.data.current.task.groupId,
         );
-        if (over.data.current.task.columnId !== pickedUpTaskColumn.current) {
+        if (over.data.current.task.groupId !== pickedUpTaskColumn.current) {
           return `Task was dropped into column ${column?.title} in position ${
             taskPosition + 1
           } of ${tasksInColumn.length}`;
@@ -246,7 +184,7 @@ export function KanbanBoard() {
             <BoardColumn
               key={col.id}
               column={col}
-              tasks={tasks.filter((task) => task.columnId === col.id)}
+              tasks={tasks.filter((task) => task.groupId === col.id)}
             />
           ))}
         </SortableContext>
@@ -259,9 +197,7 @@ export function KanbanBoard() {
               <BoardColumn
                 isOverlay
                 column={activeColumn}
-                tasks={tasks.filter(
-                  (task) => task.columnId === activeColumn.id,
-                )}
+                tasks={tasks.filter((task) => task.groupId === activeColumn.id)}
               />
             )}
             {activeTask && <TaskCard task={activeTask} isOverlay />}
@@ -335,16 +271,12 @@ export function KanbanBoard() {
     // Im dropping a Task over another Task
     if (isActiveATask && isOverATask) {
       setTasks((tasks) => {
-        const activeIndex = tasks.findIndex((t) => t.id === activeId);
-        const overIndex = tasks.findIndex((t) => t.id === overId);
+        const activeIndex = tasks.findIndex((t) => t.name === activeId);
+        const overIndex = tasks.findIndex((t) => t.name === overId);
         const activeTask = tasks[activeIndex];
         const overTask = tasks[overIndex];
-        if (
-          activeTask &&
-          overTask &&
-          activeTask.columnId !== overTask.columnId
-        ) {
-          activeTask.columnId = overTask.columnId;
+        if (activeTask && overTask && activeTask.groupId !== overTask.groupId) {
+          activeTask.groupId = overTask.groupId;
           return arrayMove(tasks, activeIndex, overIndex - 1);
         }
 
@@ -357,10 +289,10 @@ export function KanbanBoard() {
     // Im dropping a Task over a column
     if (isActiveATask && isOverAColumn) {
       setTasks((tasks) => {
-        const activeIndex = tasks.findIndex((t) => t.id === activeId);
+        const activeIndex = tasks.findIndex((t) => t.name === activeId);
         const activeTask = tasks[activeIndex];
         if (activeTask) {
-          activeTask.columnId = overId as ColumnId;
+          activeTask.groupId = overId as ColumnId;
           return arrayMove(tasks, activeIndex, activeIndex);
         }
         return tasks;
