@@ -1,3 +1,9 @@
+import { KanbanBoard } from '@/components/kanban/kanban';
+
 export const HomePage = () => {
-  return <div>Home page!</div>;
+  return (
+    <section>
+      <KanbanBoard />
+    </section>
+  );
 };

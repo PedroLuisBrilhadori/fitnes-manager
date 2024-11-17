@@ -8,15 +8,11 @@ import {
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
 import { useNavigate } from 'react-router-dom';
-import { destroyAuthCookie } from '@/lib/services/auth';
 
 export const AvatarActions = () => {
   const navigate = useNavigate();
 
-  const logOut = () => {
-    destroyAuthCookie();
-    navigate('/login');
-  };
+  const logOut = () => {};
 
   return (
     <DropdownMenu>
