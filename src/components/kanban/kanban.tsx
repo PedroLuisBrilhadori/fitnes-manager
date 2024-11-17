@@ -48,23 +48,23 @@ export type ColumnId = string;
 
 const initialTasks: Task[] = [
   {
-    name: 'Exercicio Teste',
+    name: 'Mobilidade de ombro com bastão',
     counter: 0,
     groupId: 'a',
-    repetition: 5,
-    serie: 3,
+    repetition: 2,
+    serie: 10,
     checked: false,
   },
   {
-    name: 'Exercicio testando',
+    name: 'Mobilidade de ombro com bastão - b',
     counter: 0,
     groupId: 'b',
-    repetition: 5,
-    serie: 3,
+    repetition: 2,
+    serie: 10,
     checked: false,
   },
   {
-    name: 'Exercicio asdf',
+    name: 'Mobilidade de quadril - escorpião',
     counter: 0,
     groupId: 'c',
     repetition: 5,
@@ -200,6 +200,20 @@ export function KanbanBoard() {
     },
   };
 
+  const updateTask = (cb: () => Task) => {
+    const updateTask = cb();
+
+    const updateTasks = tasks.map((t) => {
+      if (t.name != updateTask.name) return t;
+      return updateTask;
+      1;
+    });
+
+    setTasks(updateTasks);
+  };
+
+  console.log(tasks);
+
   return (
     <DndContext
       accessibility={{
@@ -217,6 +231,7 @@ export function KanbanBoard() {
               <BoardColumn
                 key={col.id}
                 column={col}
+                updateTasks={updateTask}
                 tasks={tasks.filter((task) => task.groupId === col.id)}
               />
             ))}
@@ -230,11 +245,14 @@ export function KanbanBoard() {
             {activeColumn && (
               <BoardColumn
                 isOverlay
+                updateTasks={updateTask}
                 column={activeColumn}
                 tasks={tasks.filter((task) => task.groupId === activeColumn.id)}
               />
             )}
-            {activeTask && <TaskCard task={activeTask} isOverlay />}
+            {activeTask && (
+              <TaskCard updateTasks={updateTask} task={activeTask} isOverlay />
+            )}
           </DragOverlay>,
           document.body,
         )}

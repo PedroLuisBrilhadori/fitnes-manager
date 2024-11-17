@@ -3,7 +3,7 @@ import { CSS } from '@dnd-kit/utilities';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { cva } from 'class-variance-authority';
-import { GripVertical } from 'lucide-react';
+import { GripVertical, Minus, Plus } from 'lucide-react';
 import { Badge } from '../ui/badge';
 import { ColumnId } from './kanban';
 
@@ -19,6 +19,7 @@ export interface Task {
 interface TaskCardProps {
   task: Task;
   isOverlay?: boolean;
+  updateTasks: (cb: () => Task) => void;
 }
 
 export type TaskType = 'Task';
@@ -28,7 +29,7 @@ export interface TaskDragData {
   task: Task;
 }
 
-export function TaskCard({ task, isOverlay }: TaskCardProps) {
+export function TaskCard({ task, isOverlay, updateTasks }: TaskCardProps) {
   const {
     setNodeRef,
     attributes,
@@ -80,11 +81,53 @@ export function TaskCard({ task, isOverlay }: TaskCardProps) {
           <GripVertical />
         </Button>
         <Badge variant={'outline'} className="ml-auto font-semibold">
-          Task
+          {task.name}
         </Badge>
       </CardHeader>
-      <CardContent className="px-3 pt-3 pb-6 text-left whitespace-pre-wrap">
-        {task.name}
+      <CardContent className="px-3 pt-3 pb-6 text-left whitespace-pre-wrap flex justify-between items-center">
+        <div className="flex gap-2">
+          <Button
+            variant="outline"
+            className="rounded-full text-green-400 border-green-400"
+            onClick={() =>
+              updateTasks(() => {
+                task.counter += 1;
+
+                if (task.counter == task.serie) {
+                  task.checked = true;
+                }
+
+                return task;
+              })
+            }
+          >
+            <Plus />
+          </Button>
+
+          <Button
+            variant="outline"
+            className="rounded-full text-red-400 border-red-400"
+            disabled={task.counter == 0}
+            onClick={() =>
+              updateTasks(() => {
+                if (task.counter == task.serie) {
+                  task.checked = false;
+                }
+
+                task.counter -= 1;
+                return task;
+              })
+            }
+          >
+            <Minus />
+          </Button>
+        </div>
+
+        <div>{task.counter}</div>
+
+        <div>
+          {task.serie} X {task.repetition}
+        </div>
       </CardContent>
     </Card>
   );
