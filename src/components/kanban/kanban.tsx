@@ -23,8 +23,24 @@ import { coordinateGetter } from './multipleContainersKeyboardPreset';
 
 const defaultCols = [
   {
-    id: 'todo' as const,
-    title: 'Todo',
+    id: 'a' as const,
+    title: 'A - Empurrar/Puxar',
+  },
+  {
+    id: 'b' as const,
+    title: 'B - Levantar',
+  },
+  {
+    id: 'c' as const,
+    title: 'C - Empurrar/Puxar',
+  },
+  {
+    id: 'd',
+    title: 'D - Levantar',
+  },
+  {
+    id: 'cardio',
+    title: 'Cardio',
   },
 ] satisfies Column[];
 
@@ -34,7 +50,23 @@ const initialTasks: Task[] = [
   {
     name: 'Exercicio Teste',
     counter: 0,
-    groupId: 'todo',
+    groupId: 'a',
+    repetition: 5,
+    serie: 3,
+    checked: false,
+  },
+  {
+    name: 'Exercicio testando',
+    counter: 0,
+    groupId: 'b',
+    repetition: 5,
+    serie: 3,
+    checked: false,
+  },
+  {
+    name: 'Exercicio asdf',
+    counter: 0,
+    groupId: 'c',
     repetition: 5,
     serie: 3,
     checked: false,
@@ -180,13 +212,15 @@ export function KanbanBoard() {
     >
       <BoardContainer>
         <SortableContext items={columnsId}>
-          {columns.map((col) => (
-            <BoardColumn
-              key={col.id}
-              column={col}
-              tasks={tasks.filter((task) => task.groupId === col.id)}
-            />
-          ))}
+          <div className="flex flex-col gap-4">
+            {columns.map((col) => (
+              <BoardColumn
+                key={col.id}
+                column={col}
+                tasks={tasks.filter((task) => task.groupId === col.id)}
+              />
+            ))}
+          </div>
         </SortableContext>
       </BoardContainer>
 
